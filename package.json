@@ -10,7 +10,7 @@
     "npm": "^9.5.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.3.0",
+    "react-router-dom": "6.4",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
@@ -40,6 +40,7 @@
   },
   "devDependencies": {
     "react-content-loader": "^6.2.0",
+    "react-paginate": "^8.1.4",
     "sass": "^1.58.3"
   }
 }
