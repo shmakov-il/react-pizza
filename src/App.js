@@ -1,5 +1,7 @@
 import React from "react";
+import {Provider} from "react-redux";
 import {createBrowserRouter, createRoutesFromElements, Route, RouterProvider} from "react-router-dom";
+import store from "./redux/store";
 
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
@@ -14,20 +16,22 @@ export const SearchContext = React.createContext();
 function App() {
     const [searchValue, setSearchValue] = React.useState('');
     return (
-        <SearchContext.Provider value={{searchValue, setSearchValue}}>
-            <RouterProvider router={
-                createBrowserRouter(
-                    createRoutesFromElements(
-                        <Route path='/'
-                               element={<RootLayout/>}>
-                            <Route index element={<Home/>}/>
-                            <Route path="cart" element={<Cart/>}/>
-                            <Route path="*" element={<NotFound/>}/>
-                        </Route>
+        <Provider store={store}>
+            <SearchContext.Provider value={{searchValue, setSearchValue}}>
+                <RouterProvider router={
+                    createBrowserRouter(
+                        createRoutesFromElements(
+                            <Route path='/'
+                                   element={<RootLayout/>}>
+                                <Route index element={<Home/>}/>
+                                <Route path="cart" element={<Cart/>}/>
+                                <Route path="*" element={<NotFound/>}/>
+                            </Route>
+                        )
                     )
-                )
-            }/>
-        </SearchContext.Provider>
+                }/>
+            </SearchContext.Provider>
+        </Provider>
     )
 }
 

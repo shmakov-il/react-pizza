@@ -1,24 +1,39 @@
 import React from "react";
+import {useSelector, useDispatch} from "react-redux";
+import {setSort, setToggleSort} from '../redux/slices/fitlersSlice'
 
-function Sort({selectedSort, setSelectedSort, toggleSort, setToggleSort}) {
+function Sort() {
+    const dispatch = useDispatch();
+    const selectedSort = useSelector((state) => state.filters.sort);
+    const sortType = useSelector((state) => state.filters.sorts);
+    const toggleSort = useSelector((state) => state.filters.toggleSort);
+
     const [open, setOpen] = React.useState(false);
 
-    const sortType = [
-        {name: 'популярности', sortProperty: 'rating'},
-        {name: 'цене', sortProperty: 'price'},
-        {name: 'алфавиту', sortProperty: 'title'},
-    ];
+    const sortRef = React.useRef();
 
-    const changeSortType = (i) => {
-        setSelectedSort(i);
+    const changeSortType = (obj) => {
+        dispatch(setSort(obj));
         setOpen(false);
     }
 
+    React.useEffect(() => {
+        const handleClickSort = (event) => {
+            if (!event.composedPath().includes(sortRef.current)) {
+                setOpen(false);
+            }
+        }
+
+        document.body.addEventListener('click', handleClickSort);
+
+        return () => document.body.removeEventListener('click', handleClickSort);
+    }, []);
+
     return (
-        <div className="sort">
+        <div className="sort" ref={sortRef}>
             <div className="sort__label">
                 <div className={!toggleSort ? "sort__button active" : "sort__button"}
-                     onClick={() => setToggleSort(!toggleSort)}>
+                     onClick={() => dispatch(setToggleSort(!toggleSort))}>
                     <svg
                         width="10"
                         height="6"

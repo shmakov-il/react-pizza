@@ -1,7 +1,11 @@
 import React from "react";
+import {useSelector, useDispatch} from "react-redux";
+import {setCategoryID} from "../redux/slices/fitlersSlice";
 
-function Categories({activeCategories, setActiveCategories}) {
-    const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
+function Categories() {
+    const dispatch = useDispatch();
+    const activeCategories = useSelector((state) => state.filters.categoryID);
+    const categories = useSelector((state) => state.filters.categories);
 
     return (
         <div className="categories">
@@ -9,7 +13,7 @@ function Categories({activeCategories, setActiveCategories}) {
                 {categories.map((value, i) => {
                     return (
                         <li className={activeCategories === i ? 'active' : null}
-                            onClick={() => setActiveCategories(i)}
+                            onClick={() => dispatch(setCategoryID(i))}
                             key={i}>
                             {value}
                         </li>
