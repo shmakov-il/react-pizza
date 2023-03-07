@@ -1,5 +1,5 @@
 import React from "react";
-import {useSelector, useDispatch} from "react-redux";
+import {useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import qs from "qs";
 import {selectFilterData, setFilters} from "../redux/slices/fitlersSlice";
@@ -9,9 +9,10 @@ import Skeleton from "../components/PizzaBlock/Skeleton";
 import PizzaBlock from "../components/PizzaBlock";
 import Pagination from "../components/Pagination";
 import {fetchPizza, selectPizza} from "../redux/slices/pizzaSlice";
+import {useAppDispatch} from "../redux/store";
 
 const Home: React.FC = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const {sort, categoryID: activeCategories, toggleSort, currentPage, searchValue} = useSelector(selectFilterData);
     const {items, isLoading} = useSelector(selectPizza);
 
@@ -27,7 +28,6 @@ const Home: React.FC = () => {
         const search = `&title=${searchValue}`;
         const page = `&page=${currentPage}&limit=4`;
 
-        // @ts-ignore
         dispatch(fetchPizza({
             category,
             sortBy,
@@ -41,7 +41,10 @@ const Home: React.FC = () => {
         if (window.location.search) {
             const params = qs.parse(window.location.search, {ignoreQueryPrefix: true});
             dispatch(setFilters({
-                ...params
+                activeCategories: params.activeCategories as string,
+                currentPage: params.currentPage as string,
+                selectedSort: params.selectedSort as string,
+                toggleSort: params.toggleSort as string,
             }));
 
             const {activeCategories, toggleSort, selectedSort} = params;
@@ -74,7 +77,7 @@ const Home: React.FC = () => {
     const skeleton = [...new Array(4)].map((_, index) => <Skeleton key={index}/>);
     const pizzas = items
         .map((pizzaInfo: any) => <PizzaBlock {...pizzaInfo} key={pizzaInfo.id}/>);
-    
+
     return (
         <div className="container">
             <div className="content__top">

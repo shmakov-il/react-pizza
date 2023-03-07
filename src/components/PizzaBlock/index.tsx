@@ -1,6 +1,6 @@
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {addItems} from "../../redux/slices/cartSlice";
+import {addItems, CartItems} from "../../redux/slices/cartSlice";
 import {selectPizzaCount} from "../../redux/slices/pizzaSlice";
 import {Link} from "react-router-dom";
 
@@ -22,15 +22,17 @@ const PizzaBlock: React.FC<PizzaBlockType> = ({id, title, imageUrl, price, types
     const count = useSelector(selectPizzaCount(id));
 
     const addPizza = () => {
-        dispatch(addItems({
-            uniqID: `${id}_${sizes[activeSize]}_${typesPizza[activeType]}`,
+        const item: CartItems = {
             id,
             title,
             imageUrl,
             price,
             size: sizes[activeSize],
-            type: typesPizza[activeType]
-        }));
+            type: typesPizza[activeType],
+            count: 0,
+            uniqID: `${id}_${sizes[activeSize]}_${typesPizza[activeType]}`,
+        }
+        dispatch(addItems(item));
     };
 
     return (

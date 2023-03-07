@@ -1,16 +1,18 @@
 import React from "react";
 import {useSelector, useDispatch} from "react-redux";
-import {selectFilterSort, selectToggleSort, setSort, setToggleSort, selectSortType} from '../redux/slices/fitlersSlice';
-
-type SortType = {
-    name: string;
-    sortProperty: string;
-}
+import {
+    selectFilterSort,
+    selectToggleSort,
+    setSort,
+    setToggleSort,
+    selectSortType,
+    SortType
+} from '../redux/slices/fitlersSlice';
 
 function Sort() {
     const dispatch = useDispatch();
     const selectedSort = useSelector(selectFilterSort);
-    const sortType: Array<SortType> = useSelector(selectSortType);
+    const sortType = useSelector(selectSortType);
     const toggleSort = useSelector(selectToggleSort);
 
     const [open, setOpen] = React.useState<boolean>(false);
@@ -38,7 +40,7 @@ function Sort() {
         <div className="sort" ref={sortRef}>
             <div className="sort__label">
                 <div className={!toggleSort ? "sort__button active" : "sort__button"}
-                     onClick={() => dispatch(setToggleSort(!toggleSort))}>
+                     onClick={() => dispatch(setToggleSort())}>
                     <svg
                         width="10"
                         height="6"
