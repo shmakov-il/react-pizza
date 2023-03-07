@@ -76,7 +76,7 @@ const Home: React.FC = () => {
 
     const skeleton = [...new Array(4)].map((_, index) => <Skeleton key={index}/>);
     const pizzas = items
-        .map((pizzaInfo: any) => <PizzaBlock {...pizzaInfo} key={pizzaInfo.id}/>);
+        .map((pizzaInfo) => <PizzaBlock {...pizzaInfo} key={pizzaInfo.id}/>);
 
     return (
         <div className="container">

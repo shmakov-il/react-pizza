@@ -3,11 +3,12 @@ import Search from "./Search";
 import {useSelector} from "react-redux";
 
 import logoPizza from '../assets/img/pizza-logo.svg';
+import {RootState} from "../redux/store";
 
 
 function Header() {
     const location = useLocation();
-    const {totalPrice, totalCount} = useSelector((state: any) => state.cart);
+    const {totalPrice, totalCount} = useSelector((state: RootState) => state.cart);
     return (
         <div className="header">
             <div className="container">

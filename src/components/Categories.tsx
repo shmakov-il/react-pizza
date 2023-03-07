@@ -1,12 +1,13 @@
 import React from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {setCategoryID} from "../redux/slices/fitlersSlice";
+import {RootState} from "../redux/store";
 
 function Categories() {
 
     const dispatch = useDispatch();
-    const activeCategories = useSelector((state: any) => state.filters.categoryID);
-    const categories = useSelector((state: any) => state.filters.categories);
+    const activeCategories = useSelector((state: RootState) => state.filters.categoryID);
+    const categories = useSelector((state: RootState) => state.filters.categories);
 
     return (
         <div className="categories">

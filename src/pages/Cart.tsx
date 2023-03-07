@@ -5,11 +5,12 @@ import {clearCart, selectItems} from "../redux/slices/cartSlice";
 
 import PizzaCart from "../components/PizzaCart";
 import EmptyCart from "../components/EmptyCart";
+import {RootState} from "../redux/store";
 
 const Cart: React.FC = () => {
     const dispatch = useDispatch();
     const items = useSelector(selectItems);
-    const {totalPrice, totalCount} = useSelector((state: any) => state.cart);
+    const {totalPrice, totalCount} = useSelector((state: RootState) => state.cart);
 
 
     if (!items.length) {
@@ -58,7 +59,7 @@ const Cart: React.FC = () => {
                 </div>
                 <div className="content__items">
                     {
-                        items.map((obj: any) => <PizzaCart key={obj.id + '_' + obj.size + '_' + obj.type} {...obj}/>)
+                        items.map((obj) => <PizzaCart key={obj.id + '_' + obj.size + '_' + obj.type} {...obj}/>)
                     }
                 </div>
                 <div className="cart__bottom">
