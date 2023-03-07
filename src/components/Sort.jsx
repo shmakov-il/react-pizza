@@ -1,12 +1,12 @@
 import React from "react";
 import {useSelector, useDispatch} from "react-redux";
-import {setSort, setToggleSort} from '../redux/slices/fitlersSlice'
+import {selectFilterSort, selectSortType, selectToggleSort, setSort, setToggleSort} from '../redux/slices/fitlersSlice'
 
 function Sort() {
     const dispatch = useDispatch();
-    const selectedSort = useSelector((state) => state.filters.sort);
-    const sortType = useSelector((state) => state.filters.sorts);
-    const toggleSort = useSelector((state) => state.filters.toggleSort);
+    const selectedSort = useSelector(selectFilterSort);
+    const sortType = useSelector(selectSortType);
+    const toggleSort = useSelector(selectToggleSort);
 
     const [open, setOpen] = React.useState(false);
 

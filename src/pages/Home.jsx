@@ -1,26 +1,19 @@
 import React from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
-import axios from "axios";
 import qs from "qs";
-import {setFilters} from "../redux/slices/fitlersSlice";
+import {selectFilterData, setFilters} from "../redux/slices/fitlersSlice";
 import Categories from "../components/Categories";
 import Sort from "../components/Sort";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 import PizzaBlock from "../components/PizzaBlock";
 import Pagination from "../components/Pagination";
-import {SearchContext} from "../App";
+import {fetchPizza, selectPizza} from "../redux/slices/pizzaSlice";
 
 function Home() {
     const dispatch = useDispatch();
-    const selectedSort = useSelector((state) => state.filters.sort);
-    const activeCategories = useSelector((state) => state.filters.categoryID);
-    const toggleSort = useSelector((state) => state.filters.toggleSort);
-    const currentPage = useSelector((state) => state.filters.currentPage);
-
-    const [items, setItems] = React.useState([]);
-    const [isLoading, setIsLoading] = React.useState(true);
-    const {searchValue} = React.useContext(SearchContext);
+    const {sort, categoryID: activeCategories, toggleSort, currentPage, searchValue} = useSelector(selectFilterData);
+    const {items, isLoading} = useSelector(selectPizza);
 
     const navigate = useNavigate();
 
@@ -28,18 +21,19 @@ function Home() {
     const isMounted = React.useRef(false);
 
     const fetchPizzas = () => {
-        setIsLoading(true);
         const category = activeCategories !== 0 ? `&category=${activeCategories}` : '';
-        const sortBy = `&sortBy=${selectedSort.sortProperty}`;
+        const sortBy = `&sortBy=${sort.sortProperty}`;
         const order = `&order=${toggleSort ? 'asc' : 'desc'}`;
         const search = `&title=${searchValue}`;
         const page = `&page=${currentPage}&limit=4`;
-        axios.get(`https://63fc646c859df29986bb930b.mockapi.io/items?${category}${sortBy}${order}${search}${page}`)
-            .then(response => {
-                setItems(response.data);
-                setIsLoading(false);
-                window.scrollTo(0, 0);
-            });
+
+        dispatch(fetchPizza({
+            category,
+            sortBy,
+            order,
+            search,
+            page
+        }));
     }
 
     React.useEffect(() => {
@@ -49,7 +43,8 @@ function Home() {
                 ...params
             }));
 
-            isSearch.current = true;
+            const {activeCategories, toggleSort, selectedSort} = params;
+            isSearch.current = !(activeCategories === '0' && toggleSort === 'true' && selectedSort === 'rating');
         }
     }, []);
 
@@ -58,13 +53,13 @@ function Home() {
             fetchPizzas();
         }
         isSearch.current = false;
-    }, [activeCategories, selectedSort.sortProperty, toggleSort, searchValue, currentPage]);
+    }, [activeCategories, sort.sortProperty, toggleSort, searchValue, currentPage]);
 
     React.useEffect(() => {
         if (isMounted.current) {
             const queryString = qs.stringify({
                 activeCategories,
-                selectedSort: selectedSort.sortProperty,
+                selectedSort: sort.sortProperty,
                 toggleSort,
                 currentPage
             }, {addQueryPrefix: true});
@@ -73,7 +68,7 @@ function Home() {
         }
 
         isMounted.current = true;
-    }, [activeCategories, selectedSort.sortProperty, toggleSort, currentPage]);
+    }, [activeCategories, sort.sortProperty, toggleSort, currentPage]);
 
     const skeleton = [...new Array(4)].map((_, index) => <Skeleton key={index}/>);
     const pizzas = items
@@ -88,7 +83,11 @@ function Home() {
             <h2 className="content__title">Все пиццы</h2>
             <div className="content__items">
                 {
-                    isLoading ? skeleton : pizzas
+                    isLoading === 'error'
+                        ? <h2>Пицц не найдено</h2>
+                        : isLoading === 'loading'
+                            ? skeleton
+                            : pizzas.length === 0 ? <h2>Пицц не найдено</h2> : pizzas
                 }
             </div>
             <Pagination/>

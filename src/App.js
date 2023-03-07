@@ -10,29 +10,54 @@ import Cart from "./pages/Cart";
 import RootLayout from './layouts/RootLayout'
 
 import "./scss/app.scss";
+import AboutPizza from "./components/AboutPizza";
 
-export const SearchContext = React.createContext();
+// const router = createBrowserRouter(
+//     createRoutesFromElements(
+//         <Route path='/' element={<RootLayout/>}>
+//             <Route index element={<Home/>}/>
+//             <Route path="cart" element={<Cart/>}/>
+//             <Route path="pizza/:id" element={<AboutPizza/>}/>
+//             <Route path="*" element={<NotFound/>}/>
+//         </Route>
+//     )
+// )
+
+const router = createBrowserRouter([
+    {
+        path: "/",
+        element: <RootLayout/>,
+        children: [
+            {
+                path: "",
+                element: <Home/>,
+            },
+            {
+                path: "cart",
+                element: <Cart/>,
+            },
+            {
+                path: "pizza/:id",
+                element: <AboutPizza/>,
+            },
+            {
+                path: "*",
+                element: <NotFound/>,
+            },
+        ],
+    },
+]);
 
 function App() {
-    const [searchValue, setSearchValue] = React.useState('');
     return (
         <Provider store={store}>
-            <SearchContext.Provider value={{searchValue, setSearchValue}}>
-                <RouterProvider router={
-                    createBrowserRouter(
-                        createRoutesFromElements(
-                            <Route path='/'
-                                   element={<RootLayout/>}>
-                                <Route index element={<Home/>}/>
-                                <Route path="cart" element={<Cart/>}/>
-                                <Route path="*" element={<NotFound/>}/>
-                            </Route>
-                        )
-                    )
-                }/>
-            </SearchContext.Provider>
+            <RouterProvider router={router}/>
         </Provider>
     )
 }
 
 export default App;
+
+
+
+

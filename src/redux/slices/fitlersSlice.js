@@ -14,6 +14,7 @@ export const initialState = {
     ],
     toggleSort: true,
     currentPage: 1,
+    searchValue: '',
 };
 
 const filtersSlice = createSlice({
@@ -37,6 +38,10 @@ const filtersSlice = createSlice({
             state.currentPage = Number(action.payload.currentPage);
             state.toggleSort = action.payload.toggleSort === 'true';
             state.sort = state.sorts.find((obj) => obj.sortProperty === action.payload.selectedSort);
+        },
+        setSearchValues: (state, action) => {
+            console.log(state)
+            state.searchValue = action.payload;
         }
     }
 });
@@ -49,5 +54,12 @@ export const {
     setSort,
     setToggleSort,
     setCurrentPage,
-    setFilters
+    setFilters,
+    setSearchValues
 } = actions;
+
+// Selectors
+export const selectFilterData = (state) => state.filters;
+export const selectFilterSort = (state) => state.filters.sort;
+export const selectSortType = (state) => state.filters.sorts;
+export const selectToggleSort = (state) => state.filters.toggleSort;
