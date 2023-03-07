@@ -7,7 +7,7 @@ import logoPizza from '../assets/img/pizza-logo.svg';
 
 function Header() {
     const location = useLocation();
-    const {totalPrice, totalCount} = useSelector((state) => state.cart);
+    const {totalPrice, totalCount} = useSelector((state: any) => state.cart);
     return (
         <div className="header">
             <div className="container">

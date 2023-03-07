@@ -1,25 +1,30 @@
 import React from "react";
 import {useSelector, useDispatch} from "react-redux";
-import {selectFilterSort, selectSortType, selectToggleSort, setSort, setToggleSort} from '../redux/slices/fitlersSlice'
+import {selectFilterSort, selectToggleSort, setSort, setToggleSort, selectSortType} from '../redux/slices/fitlersSlice';
+
+type SortType = {
+    name: string;
+    sortProperty: string;
+}
 
 function Sort() {
     const dispatch = useDispatch();
     const selectedSort = useSelector(selectFilterSort);
-    const sortType = useSelector(selectSortType);
+    const sortType: Array<SortType> = useSelector(selectSortType);
     const toggleSort = useSelector(selectToggleSort);
 
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState<boolean>(false);
 
-    const sortRef = React.useRef();
+    const sortRef = React.useRef<HTMLDivElement>(null);
 
-    const changeSortType = (obj) => {
+    const changeSortType = (obj: SortType) => {
         dispatch(setSort(obj));
         setOpen(false);
     }
 
     React.useEffect(() => {
-        const handleClickSort = (event) => {
-            if (!event.composedPath().includes(sortRef.current)) {
+        const handleClickSort = (event: MouseEvent) => {
+            if (sortRef.current && !event.composedPath().includes(sortRef.current)) {
                 setOpen(false);
             }
         }
@@ -56,7 +61,7 @@ function Sort() {
                         <ul>
                             {
                                 sortType.map((value, i) => {
-                                    return <li className={selectedSort.name === value.name ? 'active' : null}
+                                    return <li className={selectedSort.name === value.name ? 'active' : ''}
                                                onClick={() => changeSortType(value)}
                                                key={i}>{value.name}</li>
                                 })

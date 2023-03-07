@@ -1,16 +1,17 @@
 import React from "react";
 import {Link} from "react-router-dom";
 import {useSelector, useDispatch} from "react-redux";
-import {clearCart, clearItemCart} from "../redux/slices/cartSlice";
+import {clearCart} from "../redux/slices/cartSlice";
 
 import PizzaCart from "../components/PizzaCart";
 import EmptyCart from "../components/EmptyCart";
 
-function Cart() {
+const Cart: React.FC = () => {
     const dispatch = useDispatch();
-    const items = useSelector(state => state.cart.items);
-    const {totalPrice, totalCount} = useSelector((state) => state.cart);
-    
+    const items = useSelector((state: any) => state.cart.items);
+    const {totalPrice, totalCount} = useSelector((state: any) => state.cart);
+
+
     if (!items.length) {
         return <EmptyCart/>
     }
@@ -57,9 +58,7 @@ function Cart() {
                 </div>
                 <div className="content__items">
                     {
-                        items.map(obj => <PizzaCart key={obj.id + '_' + obj.size + '_' + obj.type}
-                                                    {...obj}
-                                                    clearItemCart={clearItemCart}/>)
+                        items.map((obj: any) => <PizzaCart key={obj.id + '_' + obj.size + '_' + obj.type} {...obj}/>)
                     }
                 </div>
                 <div className="cart__bottom">
@@ -68,7 +67,7 @@ function Cart() {
                         <span> Сумма заказа: <b>{totalPrice} ₽</b> </span>
                     </div>
                     <div className="cart__bottom-buttons">
-                        <Link to='/' href="/" className="button button--outline button--add go-back-btn">
+                        <Link to='/' className="button button--outline button--add go-back-btn">
                             <svg width="8" height="14" viewBox="0 0 8 14" fill="none"
                                  xmlns="http://www.w3.org/2000/svg">
                                 <path d="M7 13L1 6.93015L6.86175 1" stroke="#D3D3D3" strokeWidth="1.5"

@@ -4,11 +4,10 @@ import {setSearchValues} from "../../redux/slices/fitlersSlice";
 import styles from "./Search.module.scss";
 import {useDispatch} from "react-redux";
 
-
 function Search() {
     const dispatch = useDispatch();
-    const inputRef = React.useRef();
-    const [searchInput, setSearchInput] = React.useState('');
+    const inputRef = React.useRef<HTMLInputElement>(null);
+    const [searchInput, setSearchInput] = React.useState<string>('');
 
     const updateSearchInput = React.useCallback(debounce((value) => {
             console.log(value)
@@ -16,7 +15,7 @@ function Search() {
         }, 500),
         []);
 
-    const onChangeInput = (event) => {
+    const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchInput(event.target.value);
         updateSearchInput(inputRef.current?.value);
     }

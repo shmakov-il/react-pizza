@@ -1,20 +1,19 @@
 import React from "react";
 import {useSelector, useDispatch} from "react-redux";
-import {setCategoryID, setFilters} from "../redux/slices/fitlersSlice";
-import qs from "qs";
+import {setCategoryID} from "../redux/slices/fitlersSlice";
 
 function Categories() {
 
     const dispatch = useDispatch();
-    const activeCategories = useSelector((state) => state.filters.categoryID);
-    const categories = useSelector((state) => state.filters.categories);
+    const activeCategories = useSelector((state: any) => state.filters.categoryID);
+    const categories = useSelector((state: any) => state.filters.categories);
 
     return (
         <div className="categories">
             <ul>
-                {categories.map((value, i) => {
+                {categories.map((value: string, i: number) => {
                     return (
-                        <li className={activeCategories === i ? 'active' : null}
+                        <li className={activeCategories === i ? 'active' : ''}
                             onClick={() => dispatch(setCategoryID(i))}
                             key={i}>
                             {value}

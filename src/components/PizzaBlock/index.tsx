@@ -4,11 +4,19 @@ import {addItems} from "../../redux/slices/cartSlice";
 import {selectPizzaCount} from "../../redux/slices/pizzaSlice";
 import {Link} from "react-router-dom";
 
-function PizzaBlock({id, title, imageUrl, price, types, sizes}) {
+type PizzaBlockType = {
+    id: string;
+    title: string;
+    imageUrl: string;
+    price: number;
+    types: Array<number>,
+    sizes: Array<number>
+};
+const PizzaBlock: React.FC<PizzaBlockType> = ({id, title, imageUrl, price, types, sizes}) => {
     const typesPizza = ['тонкое', 'традиционное'];
 
-    const [activeSize, setActiveSize] = React.useState(0);
-    const [activeType, setActiveType] = React.useState(types[0]);
+    const [activeSize, setActiveSize] = React.useState<number>(0);
+    const [activeType, setActiveType] = React.useState<number>(types[0]);
 
     const dispatch = useDispatch();
     const count = useSelector(selectPizzaCount(id));
@@ -40,7 +48,7 @@ function PizzaBlock({id, title, imageUrl, price, types, sizes}) {
                     <ul>
                         {
                             types.map(type => {
-                                return <li className={activeType === type ? 'active' : null}
+                                return <li className={activeType === type ? 'active' : ''}
                                            onClick={() => setActiveType(type)}
                                            key={type}>{typesPizza[type]}</li>
                             })
@@ -49,7 +57,7 @@ function PizzaBlock({id, title, imageUrl, price, types, sizes}) {
                     <ul>
                         {
                             sizes.map((size, index) => {
-                                return <li className={activeSize === index ? 'active' : null}
+                                return <li className={activeSize === index ? 'active' : ''}
                                            key={index}
                                            onClick={() => setActiveSize(index)}>
                                     {size} см.</li>

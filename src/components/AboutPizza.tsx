@@ -2,8 +2,14 @@ import React from 'react';
 import {useParams} from "react-router-dom";
 import axios from "axios";
 
-const AboutPizza = () => {
-    const [pizza, setPizza] = React.useState();
+type Pizza = {
+    title: string;
+    price: number;
+    imageUrl: string;
+}
+
+const AboutPizza: React.FC = () => {
+    const [pizza, setPizza] = React.useState<Pizza>();
     const params = useParams();
 
     React.useEffect(() => {
@@ -24,9 +30,9 @@ const AboutPizza = () => {
             {
                 pizza &&
                 <>
-                    <img src={pizza?.imageUrl} alt="Pizza"/>
-                    <h2>{pizza?.title}</h2>
-                    <p>{pizza?.price} ₽</p>
+                    <img src={pizza.imageUrl} alt="Pizza"/>
+                    <h2>{pizza.title}</h2>
+                    <p>{pizza.price} ₽</p>
                 </>
             }
         </div>

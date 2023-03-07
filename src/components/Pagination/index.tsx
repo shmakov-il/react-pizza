@@ -5,9 +5,9 @@ import {setCurrentPage} from "../../redux/slices/fitlersSlice";
 
 import styles from './Pagination.module.scss';
 
-function Pagination() {
+const Pagination: React.FC = () => {
     const dispatch = useDispatch();
-    const currentPage = useSelector((state) => state.filters.currentPage)
+    const currentPage = useSelector((state: any) => state.filters.currentPage)
 
     return (
         <div className={styles.root}>
@@ -19,7 +19,6 @@ function Pagination() {
                            pageRangeDisplayed={5}
                            pageCount={3}
                            forcePage={currentPage - 1}
-                           renderOnZeroPageCount={null}
             />
         </div>
     )

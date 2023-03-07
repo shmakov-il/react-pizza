@@ -1,9 +1,19 @@
 import React from "react";
 import {useDispatch} from "react-redux";
-import {incPizza, decPizza} from "../redux/slices/cartSlice";
+import {incPizza, decPizza, clearItemCart} from "../redux/slices/cartSlice";
 
-function PizzaCart({id, title, price, count, imageUrl, type, size, clearItemCart}) {
-    const uniqID = `${id}_${size}_${type}`;
+type PizzaCartProps = {
+    id: string;
+    title: string;
+    price: number;
+    count: number;
+    imageUrl: string;
+    type: string;
+    size: number;
+}
+
+const PizzaCart: React.FC<PizzaCartProps> = ({id, title, price, count, imageUrl, type, size}) => {
+    const uniqID: string = `${id}_${size}_${type}`;
     const dispatch = useDispatch();
     return (
         <div className="cart__item">
@@ -18,7 +28,7 @@ function PizzaCart({id, title, price, count, imageUrl, type, size, clearItemCart
             </div>
             <div className="cart__item-count">
                 <button className="button button--outline button--circle cart__item-count-minus"
-                        onClick={() => dispatch(decPizza({uniqID}))}>
+                        onClick={() => dispatch(decPizza(uniqID))}>
                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none"
                          xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -32,7 +42,7 @@ function PizzaCart({id, title, price, count, imageUrl, type, size, clearItemCart
                 </button>
                 <b>{count}</b>
                 <button className="button button--outline button--circle cart__item-count-plus"
-                        onClick={() => dispatch(incPizza({uniqID}))}>
+                        onClick={() => dispatch(incPizza(uniqID))}>
                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none"
                          xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -48,7 +58,7 @@ function PizzaCart({id, title, price, count, imageUrl, type, size, clearItemCart
             <div className="cart__item-price">
                 <b>{count * price} ₽</b>
             </div>
-            <div className="cart__item-remove" onClick={() => dispatch(clearItemCart({uniqID}))}>
+            <div className="cart__item-remove" onClick={() => dispatch(clearItemCart(uniqID))}>
                 <div className="button button--outline button--circle">
                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none"
                          xmlns="http://www.w3.org/2000/svg">

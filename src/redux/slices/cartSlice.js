@@ -32,7 +32,7 @@ const cartSlice = createSlice({
         },
         clearItemCart: (state, action) => {
             const clearObj = state.items.find(obj => {
-                return obj.uniqID === action.payload.uniqID;
+                return obj.uniqID === action.payload;
             });
             state.items.splice(state.items.indexOf(clearObj), 1);
             state.totalCount -= clearObj.count;
@@ -40,7 +40,7 @@ const cartSlice = createSlice({
         },
         incPizza: (state, action) => {
             const inc = state.items.find(obj => {
-                return obj.uniqID === action.payload.uniqID;
+                return obj.uniqID === action.payload;
             });
             inc.count += 1;
             state.totalCount += 1;
@@ -48,7 +48,7 @@ const cartSlice = createSlice({
         },
         decPizza: (state, action) => {
             const dec = state.items.find(obj => {
-                return obj.uniqID === action.payload.uniqID;
+                return obj.uniqID === action.payload;
             });
             dec.count -= 1;
             state.totalCount -= 1;

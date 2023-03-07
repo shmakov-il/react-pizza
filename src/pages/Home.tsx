@@ -10,7 +10,7 @@ import PizzaBlock from "../components/PizzaBlock";
 import Pagination from "../components/Pagination";
 import {fetchPizza, selectPizza} from "../redux/slices/pizzaSlice";
 
-function Home() {
+const Home: React.FC = () => {
     const dispatch = useDispatch();
     const {sort, categoryID: activeCategories, toggleSort, currentPage, searchValue} = useSelector(selectFilterData);
     const {items, isLoading} = useSelector(selectPizza);
@@ -27,6 +27,7 @@ function Home() {
         const search = `&title=${searchValue}`;
         const page = `&page=${currentPage}&limit=4`;
 
+        // @ts-ignore
         dispatch(fetchPizza({
             category,
             sortBy,
@@ -72,8 +73,8 @@ function Home() {
 
     const skeleton = [...new Array(4)].map((_, index) => <Skeleton key={index}/>);
     const pizzas = items
-        //.filter((pizza) => pizza.title.toLowerCase().includes(searchValue.toLowerCase()))
-        .map(pizzaInfo => <PizzaBlock {...pizzaInfo} key={pizzaInfo.id}/>);
+        .map((pizzaInfo: any) => <PizzaBlock {...pizzaInfo} key={pizzaInfo.id}/>);
+    
     return (
         <div className="container">
             <div className="content__top">

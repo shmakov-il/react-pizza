@@ -40,7 +40,6 @@ const filtersSlice = createSlice({
             state.sort = state.sorts.find((obj) => obj.sortProperty === action.payload.selectedSort);
         },
         setSearchValues: (state, action) => {
-            console.log(state)
             state.searchValue = action.payload;
         }
     }
