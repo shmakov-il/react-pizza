@@ -11,7 +11,9 @@ import Pagination from "../components/Pagination";
 import {fetchPizza, selectPizza} from "../redux/slices/pizzaSlice";
 import {useAppDispatch} from "../redux/store";
 
+
 const Home: React.FC = () => {
+
     const dispatch = useAppDispatch();
     const {sort, categoryID: activeCategories, toggleSort, currentPage, searchValue} = useSelector(selectFilterData);
     const {items, isLoading} = useSelector(selectPizza);

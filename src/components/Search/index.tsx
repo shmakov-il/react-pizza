@@ -4,13 +4,12 @@ import {setSearchValues} from "../../redux/slices/fitlersSlice";
 import styles from "./Search.module.scss";
 import {useDispatch} from "react-redux";
 
-function Search() {
+const Search: React.FC = () => {
     const dispatch = useDispatch();
     const inputRef = React.useRef<HTMLInputElement>(null);
     const [searchInput, setSearchInput] = React.useState<string>('');
 
     const updateSearchInput = React.useCallback(debounce((value) => {
-            console.log(value)
             dispatch(setSearchValues(value));
         }, 500),
         []);

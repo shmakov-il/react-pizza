@@ -1,7 +1,7 @@
 import React from "react";
 import {Provider} from "react-redux";
 import {createBrowserRouter, createRoutesFromElements, Route, RouterProvider} from "react-router-dom";
-import store from "./redux/store";
+import store, {persistor} from "./redux/store";
 
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
@@ -11,6 +11,8 @@ import RootLayout from './layouts/RootLayout'
 
 import "./scss/app.scss";
 import AboutPizza from "./components/AboutPizza";
+import {PersistGate} from "redux-persist/integration/react";
+
 
 // const router = createBrowserRouter(
 //     createRoutesFromElements(
@@ -51,13 +53,13 @@ const router = createBrowserRouter([
 function App() {
     return (
         <Provider store={store}>
-            <RouterProvider router={router}/>
+            <PersistGate loading={null} persistor={persistor}>
+                <RouterProvider router={router}/>
+            </PersistGate>
         </Provider>
     )
 }
 
 export default App;
-
-
 
 

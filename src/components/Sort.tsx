@@ -9,7 +9,7 @@ import {
     SortType
 } from '../redux/slices/fitlersSlice';
 
-function Sort() {
+const Sort: React.FC = React.memo(() => {
     const dispatch = useDispatch();
     const selectedSort = useSelector(selectFilterSort);
     const sortType = useSelector(selectSortType);
@@ -74,6 +74,6 @@ function Sort() {
             }
         </div>
     )
-}
+})
 
 export default Sort;

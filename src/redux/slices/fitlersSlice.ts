@@ -1,7 +1,7 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {RootState} from "../store";
 
-type Test = Record<string, string>
+type TypeFromURL = Record<string, string>
 
 enum Types {
     RATING = 'rating',
@@ -57,7 +57,7 @@ const filtersSlice = createSlice({
         setCurrentPage: (state, action: PayloadAction<number>) => {
             state.currentPage = action.payload;
         },
-        setFilters: (state, action: PayloadAction<Test>) => {
+        setFilters: (state, action: PayloadAction<TypeFromURL>) => {
             state.categoryID = Number(action.payload.activeCategories);
             state.currentPage = Number(action.payload.currentPage);
             state.toggleSort = action.payload.toggleSort === 'true';

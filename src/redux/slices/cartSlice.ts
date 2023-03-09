@@ -1,5 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {RootState} from "../store";
+import {findPizzaOnUniqID} from "../../utils/findPizzaOnUniqID";
 
 export type CartItems = {
     id: string;
@@ -29,15 +30,13 @@ const cartSlice = createSlice({
     initialState,
     reducers: {
         addItems: (state, action: PayloadAction<CartItems>) => {
-            const findPizza = state.items.find(obj => {
-                return obj.uniqID === action.payload.uniqID;
-            });
+            const pizza = findPizzaOnUniqID(state.items, action.payload.uniqID);
 
-            if (!findPizza) {
+            if (!pizza) {
                 action.payload.count = 1;
                 state.items.push(action.payload);
             } else {
-                findPizza.count += 1;
+                pizza.count += 1;
             }
 
             state.totalPrice += action.payload.price;
@@ -49,37 +48,31 @@ const cartSlice = createSlice({
             state.totalPrice = 0;
         },
         clearItemCart: (state, action: PayloadAction<string>) => {
-            const clearObj = state.items.find(obj => {
-                return obj.uniqID === action.payload;
-            });
-            if (clearObj) {
-                state.items.splice(state.items.indexOf(clearObj), 1);
-                state.totalCount -= clearObj.count;
-                state.totalPrice -= clearObj.price * clearObj.count;
+
+            const pizza = findPizzaOnUniqID(state.items, action.payload);
+
+            if (pizza) {
+                state.items.splice(state.items.indexOf(pizza), 1);
+                state.totalCount -= pizza.count;
+                state.totalPrice -= pizza.price * pizza.count;
             }
         },
         incPizza: (state, action: PayloadAction<string>) => {
-            const inc = state.items.find(obj => {
-                return obj.uniqID === action.payload;
-            });
-            if (inc) {
-                inc.count += 1;
+            const pizza = findPizzaOnUniqID(state.items, action.payload);
+
+            if (pizza) {
+                pizza.count += 1;
                 state.totalCount += 1;
-                state.totalPrice += inc.price;
+                state.totalPrice += pizza.price;
             }
         },
         decPizza: (state, action: PayloadAction<string>) => {
-            const dec = state.items.find(obj => {
-                return obj.uniqID === action.payload;
-            });
-            if (dec) {
-                dec.count -= 1;
-                state.totalCount -= 1;
-                state.totalPrice -= dec.price;
+            const pizza = findPizzaOnUniqID(state.items, action.payload);
 
-                // if (dec.count === 0) {
-                //     state.items.splice(state.items.indexOf(dec), 1);
-                // }
+            if (pizza) {
+                pizza.count -= 1;
+                state.totalCount -= 1;
+                state.totalPrice -= pizza.price;
             }
         }
     }
