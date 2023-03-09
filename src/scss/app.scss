@@ -189,6 +189,20 @@ body {
       width: 13%;
 
       &-minus {
+
+        &:disabled {
+          opacity: 0.5;
+
+          &:hover {
+            background-color: transparent;
+            transform: none;
+
+            svg path {
+              fill: #fe5f1e;
+            }
+          }
+        }
+
         svg {
           path:first-of-type {
             display: none;

@@ -77,9 +77,9 @@ const cartSlice = createSlice({
                 state.totalCount -= 1;
                 state.totalPrice -= dec.price;
 
-                if (dec.count === 0) {
-                    state.items.splice(state.items.indexOf(dec), 1);
-                }
+                // if (dec.count === 0) {
+                //     state.items.splice(state.items.indexOf(dec), 1);
+                // }
             }
         }
     }

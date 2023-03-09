@@ -28,6 +28,7 @@ const PizzaCart: React.FC<PizzaCartProps> = ({id, title, price, count, imageUrl,
             </div>
             <div className="cart__item-count">
                 <button className="button button--outline button--circle cart__item-count-minus"
+                        disabled={count === 1}
                         onClick={() => dispatch(decPizza(uniqID))}>
                     <svg width="10" height="10" viewBox="0 0 10 10" fill="none"
                          xmlns="http://www.w3.org/2000/svg">
