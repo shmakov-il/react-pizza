@@ -1,6 +1,6 @@
 import React from "react";
 import {useDispatch} from "react-redux";
-import {incPizza, decPizza, clearItemCart} from "../redux/slices/cartSlice";
+import {clearItemCart, decPizza, incPizza} from "../redux/cart/slice";
 
 type PizzaCartProps = {
     id: string;

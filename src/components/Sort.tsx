@@ -1,13 +1,9 @@
 import React from "react";
 import {useSelector, useDispatch} from "react-redux";
-import {
-    selectFilterSort,
-    selectToggleSort,
-    setSort,
-    setToggleSort,
-    selectSortType,
-    SortType
-} from '../redux/slices/fitlersSlice';
+import {selectFilterSort, selectSortType, selectToggleSort} from "../redux/filter/selectors";
+import {SortType} from "../redux/filter/types";
+import {setSort, setToggleSort} from "../redux/filter/slice";
+
 
 const Sort: React.FC = React.memo(() => {
     const dispatch = useDispatch();

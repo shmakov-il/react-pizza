@@ -11,9 +11,9 @@ import {
     REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import filters from './slices/fitlersSlice';
-import cart from './slices/cartSlice';
-import pizza from './slices/pizzaSlice'
+import filters from './filter/slice';
+import cart from './cart/slice';
+import pizza from './pizza/slice'
 
 const persistConfig = {
     key: 'root',
